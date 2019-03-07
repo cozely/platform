@@ -4,7 +4,6 @@
 package window
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/cozely/platform/internal"
@@ -85,75 +84,7 @@ func (w *Window) HasMouseFocus() bool {
 	return w.hasMouseFocus
 }
 
-var size Coord
-
 // Size returns the size of the window in (screen) pixels.
 func (w *Window) Size() Coord {
 	return w.size
-}
-
-type Option func(*Window) error
-
-func Title(s string) Option {
-	return func(w *Window) error {
-		if w.opened {
-			//TODO: implement
-			return errors.New("internal.VSync: not implemented for opened windows")
-		}
-		w.title = s
-		return nil
-	}
-}
-
-func Size(x, y int32) Option {
-	return func(w *Window) error {
-		if w.opened {
-			//TODO: implement
-			return errors.New("internal.VSync: not implemented for opened windows")
-		}
-		w.size = Coord{x, y}
-		return nil
-	}
-}
-
-func Fullscreen(fullscreen bool, windowed bool) Option {
-	return func(w *Window) error {
-		if w.opened {
-			//TODO: implement
-			return errors.New("internal.VSync: not implemented for opened windows")
-		}
-		w.fullscreen = fullscreen
-		w.desktop = !windowed
-		return nil
-	}
-}
-
-func Monitor(n int) Option {
-	return func(w *Window) error {
-		if w.opened {
-			return errors.New("internal.VSync: not implemented for opened windows")
-		}
-		w.monitor = int32(n)
-		return nil
-	}
-}
-
-func VSync(enable bool) Option {
-	return func(w *Window) error {
-		if w.opened {
-			return errors.New("internal.VSync: not implemented for opened windows")
-		}
-		w.vsync = enable
-		return nil
-	}
-}
-
-func Debug(enable bool) Option {
-	return func(w *Window) error {
-		if w.opened {
-			return errors.New("internal.Debug: not implemented for opened windows")
-		}
-		w.debug = enable
-		return nil
-	}
 }
