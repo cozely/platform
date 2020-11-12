@@ -1,3 +1,5 @@
+// +build !windows
+
 package sdl
 
 //#include "sdl.h"

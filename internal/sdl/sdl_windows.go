@@ -1,15 +1,17 @@
 package sdl
 
 import (
-	"unsafe"
-	"x/sys/syscall"
+	"golang.org/x/sys/windows"
 )
 
-var dll = syscall.NewLazyDLL("SDL2.dll")
+var dll = windows.NewLazyDLL("SDL2.dll")
 
 var (
 	SDL_Init          = dll.NewProc("SDL_Init")
 	SDL_InitSubSystem = dll.NewProc("SDL_InitSubSystem")
+	SDL_QuitSubSystem = dll.NewProc("SDL_QuitSubSystem")
+	SDL_WasInit       = dll.NewProc("SDL_WasInit")
+	SDL_Quit          = dll.NewProc("SDL_Quit")
 )
 
 func Init(f InitFlags) error {
