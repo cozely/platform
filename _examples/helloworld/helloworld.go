@@ -18,6 +18,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(window.InfoString())
 	w.Present()
 
 	fmt.Print("Window opened...")
