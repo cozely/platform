@@ -6,16 +6,30 @@ package window
 import (
 	"fmt"
 
+	"github.com/cozely/platform/internal/gl"
 	"github.com/cozely/platform/internal/sdl"
 )
 
-func setup() error {
+func setupSDL() error {
 	if sdl.WasInit(sdl.InitVideo) == 0 {
 		err := sdl.Init(sdl.InitVideo)
 		if err != nil {
 			return err
 		}
 	}
+
+	sdl.GLLoadDefaultLibrary()
+	return nil
+}
+
+func setupGL() error {
+	if !gl.WasInit() {
+		err := gl.Init() //TODO: test if already init
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -41,7 +55,7 @@ type Window struct {
 func New(o ...Option) (*Window, error) {
 	var err error
 
-	err = setup()
+	err = setupSDL()
 	if err != nil {
 		return nil, fmt.Errorf("internal.New: %v", err)
 	}
@@ -113,6 +127,19 @@ func New(o ...Option) (*Window, error) {
 			return &w, err
 		}
 	}
+
+	err = setupGL()
+	if err != nil {
+		return nil, err
+	}
+
+	c := struct {
+		R float32
+		G float32
+		B float32
+		A float32
+	}{R: 1.0, G: 0.5, B: 0.5, A: 1.0}
+	gl.ClearBufferv(gl.COLOR, 0, &c)
 
 	w.opened = true
 
