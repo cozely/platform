@@ -16,9 +16,9 @@ func setupSDL() error {
 		if err != nil {
 			return err
 		}
-	}
 
-	sdl.GLLoadDefaultLibrary()
+		sdl.GLLoadDefaultLibrary()
+	}
 	return nil
 }
 
@@ -118,13 +118,13 @@ func New(o ...Option) (*Window, error) {
 		if err != nil {
 			err = sdl.GLSetSwapInterval(1)
 			if err != nil {
-				return &w, err
+				return nil, err
 			}
 		}
 	} else {
 		err = sdl.GLSetSwapInterval(0)
 		if err != nil {
-			return &w, err
+			return nil, err
 		}
 	}
 
